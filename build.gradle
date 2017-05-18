@@ -1,0 +1,33 @@
+buildscript {
+  ext.kotlin_version = '1.1.2-3'
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+  }
+}
+
+apply plugin: 'kotlin'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'org.jetbrains.kotlin:kotlin-stdlib'
+}
+
+sourceSets {
+  main.kotlin.srcDirs += 'src/main/kotlin'
+  main.java.srcDirs += 'src/main/java'
+}
+
+jar {
+  manifest {
+    attributes 'Main-Class': 'HelloKt'
+  }
+  from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
